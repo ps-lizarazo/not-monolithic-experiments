@@ -12,54 +12,56 @@ from .dto import Orden as OrdenDTO
 from .dto import Item as ItemDTO
 
 class MapeadorOrden(Mapeador):
-    _FORMATO_FECHA = '%Y-%m-%dT%H:%M:%SZ'
+	_FORMATO_FECHA = '%Y-%m-%dT%H:%M:%SZ'
 
-    def _procesar_items_dto(self, items_dto: list) -> list[Item]:
-       
-        return [Item]
+	def _procesar_items_dto(self, items_dto: list) -> list[Item]:
+		for item in items_dto:
+			1+1
 
-    def _procesar_itinerario(self, item: any) -> list[ItemDTO]:
-        items_dto = list()
+		return [Item]
 
-        
-        item_dto = ItemDTO()
-        item_dto.nombre = item.nombre
-        item_dto.origen_codigo = leg.origen.codigo
-        item_dto.fecha_salida = leg.fecha_salida
-        item_dto.fecha_llegada = leg.fecha_llegada
-        item_dto.leg_orden = k
-        item_dto.segmento_orden = j
-        item_dto.odo_orden = i
+	def _procesar_itinerario(self, item: any) -> list[ItemDTO]:
+		items_dto = list()
 
-        items_dto.append(item_dto)
+		
+		item_dto = ItemDTO()
+		item_dto.nombre = item.nombre
+		item_dto.origen_codigo = leg.origen.codigo
+		item_dto.fecha_salida = leg.fecha_salida
+		item_dto.fecha_llegada = leg.fecha_llegada
+		item_dto.leg_orden = k
+		item_dto.segmento_orden = j
+		item_dto.odo_orden = i
 
-        return items_dto
+		items_dto.append(item_dto)
 
-    def obtener_tipo(self) -> type:
-        return Orden.__class__
+		return items_dto
 
-    def entidad_a_dto(self, entidad: Orden) -> OrdenDTO:
-        
-        orden_dto = OrdenDTO()
-        orden_dto.fecha_creacion = entidad.fecha_creacion
-        orden_dto.fecha_actualizacion = entidad.fecha_actualizacion
-        orden_dto.id = str(entidad.id)
+	def obtener_tipo(self) -> type:
+		return Orden.__class__
 
-        items_dto = list()
-        
-        for item in entidad.items:
-            items_dto.extend(self._procesar_itinerario(item))
+	def entidad_a_dto(self, entidad: Orden) -> OrdenDTO:
+			
+		orden_dto = OrdenDTO()
+		orden_dto.fecha_creacion = entidad.fecha_creacion
+		orden_dto.fecha_actualizacion = entidad.fecha_actualizacion
+		orden_dto.id = str(entidad.id)
 
-        orden_dto.items = items_dto
+		items_dto = list()
+		
+		for item in entidad.items:
+				items_dto.extend(self._procesar_itinerario(item))
 
-        return orden_dto
+		orden_dto.items = items_dto
 
-    def dto_a_entidad(self, dto: OrdenDTO) -> Orden:
-        orden = Orden(dto.id, dto.fecha_creacion, dto.fecha_actualizacion)
-        orden.items = list()
+		return orden_dto
 
-        items_dto: list[ItemDTO] = dto.items
+	def dto_a_entidad(self, dto: OrdenDTO) -> Orden:
+		orden = Orden(dto.id, dto.fecha_creacion, dto.fecha_actualizacion)
+		orden.items = list()
 
-        orden.items.extend(self._procesar_items_dto(items_dto))
-        
-        return orden
+		items_dto: list[ItemDTO] = dto.items
+
+		orden.items.extend(self._procesar_items_dto(items_dto))
+		
+		return orden
