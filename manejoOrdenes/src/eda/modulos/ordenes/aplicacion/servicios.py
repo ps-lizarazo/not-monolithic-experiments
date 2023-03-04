@@ -1,34 +1,38 @@
 from eda.seedwork.aplicacion.servicios import Servicio
-from eda.modulos.ordenes.dominio.entidades import Reserva
+from eda.modulos.ordenes.dominio.entidades import Orden
 from eda.modulos.ordenes.dominio.fabricas import FabricaOrdenes
 from eda.modulos.ordenes.infraestructura.fabricas import FabricaRepositorio
 from eda.modulos.ordenes.infraestructura.repositorios import RepositorioReservas
-from ..infraestructura.mapeadores import MapeadorReserva
+from ..infraestructura.mapeadores import MapeadorOrden
 
-from .dto import ReservaDTO
+from .dto import OrdenDTO
+
 
 class ServicioOrdenes(Servicio):
 
-    def __init__(self):
-        self._fabrica_repositorio: FabricaRepositorio = FabricaRepositorio()
-        self._fabrica_vuelos: FabricaOrdenes = FabricaOrdenes()
+	def __init__(self):
+		self._fabrica_repositorio: FabricaRepositorio = FabricaRepositorio()
+		self._fabrica_ordenes: FabricaOrdenes = FabricaOrdenes()
 
-    @property
-    def fabrica_repositorio(self):
-        return self._fabrica_repositorio
-    
-    @property
-    def fabrica_vuelos(self):
-        return self._fabrica_vuelos
+	@property
+	def fabrica_repositorio(self):
+		return self._fabrica_repositorio
 
-    def crear_reserva(self, reserva_dto: ReservaDTO) -> ReservaDTO:
-        reserva: Reserva = self.fabrica_vuelos.crear_objeto(reserva_dto, MapeadorReserva())
+	@property
+	def fabrica_orden(self):
+		return self._fabrica_ordenes
 
-        repositorio = self.fabrica_repositorio.crear_objeto(RepositorioReservas.__class__)
-        repositorio.agregar(reserva)
+	def crear_orden(self, orden_dto: OrdenDTO) -> OrdenDTO:
+		reserva: Orden = self.fabrica_orden.crear_objeto(
+			orden_dto, MapeadorOrden())
 
-        return self.fabrica_vuelos.crear_objeto(reserva, MapeadorReserva())
+		repositorio = self.fabrica_repositorio.crear_objeto(
+			RepositorioReservas.__class__)
+		repositorio.agregar(reserva)
 
-    def obtener_reserva_por_id(self, id) -> ReservaDTO:
-        repositorio = self.fabrica_repositorio.crear_objeto(RepositorioReservas.__class__)
-        return repositorio.obtener_por_id(id).__dict__
+		return self.fabrica_orden.crear_objeto(reserva, MapeadorOrden())
+
+	def obtener_reserva_por_id(self, id) -> OrdenDTO:
+		repositorio = self.fabrica_repositorio.crear_objeto(
+			RepositorioReservas.__class__)
+		return repositorio.obtener_por_id(id).__dict__

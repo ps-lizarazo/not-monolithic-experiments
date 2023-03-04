@@ -8,61 +8,40 @@ persistir objetos dominio (agregaciones) en la capa de infraestructura del domin
 from eda.config.db import db
 from eda.modulos.ordenes.dominio.repositorios import RepositorioReservas, RepositorioProveedores
 from eda.modulos.ordenes.dominio.objetos_valor import NombreAero, Odo, Leg, Segmento, Itinerario, CodigoIATA
-from eda.modulos.ordenes.dominio.entidades import Proveedor, Aeropuerto, Reserva
-from eda.modulos.ordenes.dominio.fabricas import FabricaVuelos
-from .dto import Reserva as ReservaDTO
-from .mapeadores import MapeadorReserva
+from eda.modulos.ordenes.dominio.entidades import Proveedor, Aeropuerto, Orden
+from eda.modulos.ordenes.dominio.fabricas import FabricaPedido
+from .dto import Orden as OrdenDTO
+from .mapeadores import MapeadorOrden
 from uuid import UUID
 
-class RepositorioProveedoresSQLite(RepositorioProveedores):
-
-    def obtener_por_id(self, id: UUID) -> Reserva:
-        # TODO
-        raise NotImplementedError
-
-    def obtener_todos(self) -> list[Reserva]:
-        # TODO
-        raise NotImplementedError
-
-    def agregar(self, entity: Reserva):
-        # TODO
-        raise NotImplementedError
-
-    def actualizar(self, entity: Reserva):
-        # TODO
-        raise NotImplementedError
-
-    def eliminar(self, entity_id: UUID):
-        # TODO
-        raise NotImplementedError
 
 
-class RepositorioReservasSQLite(RepositorioReservas):
+class RepositorioOrdenesSQLite(RepositorioReservas):
 
     def __init__(self):
-        self._fabrica_vuelos: FabricaVuelos = FabricaVuelos()
+        self._fabrica_pedido: FabricaPedido = FabricaPedido()
 
     @property
-    def fabrica_vuelos(self):
-        return self._fabrica_vuelos
+    def fabrica_pedido(self):
+        return self._fabrica_pedido
 
-    def obtener_por_id(self, id: UUID) -> Reserva:
-        reserva_dto = db.session.query(ReservaDTO).filter_by(id=str(id)).one()
-        return self.fabrica_vuelos.crear_objeto(reserva_dto, MapeadorReserva())
+    def obtener_por_id(self, id: UUID) -> Orden:
+        orden_dto = db.session.query(OrdenDTO).filter_by(id=str(id)).one()
+        return self.fabrica_pedido.crear_objeto(orden_dto, MapeadorOrden())
 
-    def obtener_todos(self) -> list[Reserva]:
+    def obtener_todos(self) -> list[Orden]:
         # TODO
         raise NotImplementedError
 
-    def agregar(self, reserva: Reserva):
-        reserva_dto = self.fabrica_vuelos.crear_objeto(reserva, MapeadorReserva())
-        db.session.add(reserva_dto)
+    def agregar(self, reserva: Orden):
+        orden_dto = self.fabrica_pedido.crear_objeto(reserva, MapeadorOrden())
+        db.session.add(orden_dto)
         db.session.commit()
 
-    def actualizar(self, reserva: Reserva):
+    def actualizar(self, orden: Orden):
         # TODO
         raise NotImplementedError
 
-    def eliminar(self, reserva_id: UUID):
+    def eliminar(self, orden_id: UUID):
         # TODO
         raise NotImplementedError
