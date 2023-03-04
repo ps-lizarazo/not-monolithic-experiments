@@ -21,8 +21,8 @@ class _FabricaOrdenes(Fabrica):
         else:
             orden: Orden = mapeador.dto_a_entidad(obj)
 
-            self.validar_regla(MinimoUnItinerario(orden.itinerarios))
-            [self.validar_regla(RutaValida(ruta)) for itin in orden.itinerarios for odo in itin.odos for segmento in odo.segmentos for ruta in segmento.legs]
+            self.validar_regla(MinimoUnItinerario(orden.items))
+            [self.validar_regla(RutaValida(ruta)) for itin in orden.items for odo in itin.odos for segmento in odo.segmentos for ruta in segmento.legs]
             
             return orden
 

@@ -6,17 +6,17 @@ persistir objetos dominio (agregaciones) en la capa de infraestructura del domin
 """
 
 from eda.config.db import db
-from eda.modulos.ordenes.dominio.repositorios import RepositorioReservas, RepositorioProveedores
-from eda.modulos.ordenes.dominio.objetos_valor import NombreAero, Odo, Leg, Segmento, Itinerario, CodigoIATA
-from eda.modulos.ordenes.dominio.entidades import Proveedor, Aeropuerto, Orden
-from eda.modulos.ordenes.dominio.fabricas import FabricaPedido
+from eda.modulos.pedidos.dominio.repositorios import RepositorioItems,RepositorioOrdenes
+#from eda.modulos.pedidos.dominio.objetos_valor import NombreAero, Odo, Leg, Segmento, Itinerario, CodigoIATA
+from eda.modulos.pedidos.dominio.entidades import Orden
+from eda.modulos.pedidos.dominio.fabricas import FabricaPedido
 from .dto import Orden as OrdenDTO
 from .mapeadores import MapeadorOrden
 from uuid import UUID
 
 
 
-class RepositorioOrdenesSQLite(RepositorioReservas):
+class RepositorioOrdenesSQLite(RepositorioOrdenes):
 
     def __init__(self):
         self._fabrica_pedido: FabricaPedido = FabricaPedido()
@@ -33,8 +33,8 @@ class RepositorioOrdenesSQLite(RepositorioReservas):
         # TODO
         raise NotImplementedError
 
-    def agregar(self, reserva: Orden):
-        orden_dto = self.fabrica_pedido.crear_objeto(reserva, MapeadorOrden())
+    def agregar(self, orden: Orden):
+        orden_dto = self.fabrica_pedido.crear_objeto(orden, MapeadorOrden())
         db.session.add(orden_dto)
         db.session.commit()
 

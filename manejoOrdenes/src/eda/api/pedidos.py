@@ -1,14 +1,14 @@
 import eda.seedwork.presentacion.api as api
 import json
-from eda.modulos.ordenes.aplicacion.servicios import ServicioOrdenes
-from eda.modulos.ordenes.aplicacion.dto import OrdenDTO
+from eda.modulos.pedidos.aplicacion.servicios import ServicioOrdenes
+from eda.modulos.pedidos.aplicacion.dto import OrdenDTO
 from eda.seedwork.dominio.excepciones import ExcepcionDominio
 
 from flask import redirect, render_template, request, session, url_for
 from flask import Response
-from eda.modulos.ordenes.aplicacion.mapeadores import MapeadorOrdenDTOJson
+from eda.modulos.pedidos.aplicacion.mapeadores import MapeadorOrdenDTOJson
 
-bp = api.crear_blueprint('ordenes', '/ordenes')
+bp = api.crear_blueprint('pedidos', '/pedidos')
 
 @bp.route('/orden', methods=('POST',))
 def reservar():
@@ -34,3 +34,7 @@ def dar_reserva(id=None):
         return sr.obtener_reserva_por_id(id)
     else:
         return [{'message': 'GET!'}]
+
+@bp.route("/health-ordenes", methods=('GET',))
+def health():
+  return {"status": "up-ordenes"}

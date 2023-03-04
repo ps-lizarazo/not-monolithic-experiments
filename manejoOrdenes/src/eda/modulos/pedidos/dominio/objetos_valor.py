@@ -38,6 +38,18 @@ class DireccionEntrega():
 class Item(ObjetoValor):
 	nombre: str = field(default_factory=str)
 	cantidad: int = field(default_factory=int)
+	pais_recogida:str = field(default_factory=str)
+	ciudad_recogida:str = field(default_factory=str)
+	direccion_recogida:str = field(default_factory=str)
+	codigo_postal_recogida:str = field(default_factory=str)
+	telefono_responsable_recogida:str = field(default_factory=str)
+	nombre_responsable_recogida:str = field(default_factory=str)
+	pais_entrega:str = field(default_factory=str)
+	ciudad_entrega:str = field(default_factory=str)
+	direccion_entrega:str = field(default_factory=str)
+	codigo_postal_entrega:str = field(default_factory=str)
+	telefono_responsable_entrega:str = field(default_factory=str)
+	nombre_responsable_entrega:str = field(default_factory=str)
    
 
    
