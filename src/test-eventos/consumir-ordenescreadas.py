@@ -8,12 +8,15 @@ import time
 def time_millis():
     return int(time.time() * 1000)
 
-def _publicar_mensaje(mensaje, topico, schema):
+def _consumir_mensajes(topico, schema):
     cliente = pulsar.Client('pulsar://localhost:6650')
-    publicador = cliente.create_producer(topico, schema=AvroSchema(EventoOrdenCreada))
-    publicador.send(mensaje)
-    print("===========EVENTO ENVIADO============")
-    cliente.close()
+    consumidor = cliente.subscribe(topico, subscription_name="centrodistribucion-sub-eventos", schema=AvroSchema(EventoOrdenCreada))
+    
+    while True:
+        mensaje = consumidor.receive()
+        print(f'Evento recibido: {mensaje.value().data}')
+
+        consumidor.acknowledge(mensaje)
 
 class EventoIntegracion(Record):
     id = String(default=str(uuid.uuid4()))
@@ -52,20 +55,5 @@ class EventoOrdenCreada(EventoIntegracion):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-new_event = EventoOrdenCreada(
-    data= EventoOrdenCreadaPayload (
-        guid=str(uuid.uuid4()),
-        items= [
-            EventoOrdenCreadaItem (
-                guid = str(uuid.uuid4()),
-                direccion_recogida = "Av direccion recoger 123",
-                direccion_entrega = "Av para entregar 123",
-                tamanio = "5kg",
-                telefono = "300 321321",
-            ),
-        ],
-        fecha_creacion=int(datetime.now().timestamp())
-    )
-)
 
-_publicar_mensaje(new_event, 'eventos-orden', AvroSchema(EventoOrdenCreada))
+_consumir_mensajes('eventos-orden', AvroSchema(EventoOrdenCreada))

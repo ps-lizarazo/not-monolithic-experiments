@@ -12,6 +12,8 @@ from .excepciones import IdDebeSerInmutableExcepcion
 from datetime import datetime
 import uuid
 
+from typing import List
+
 @dataclass
 class Entidad:
     id: uuid.UUID = field(hash=True)
@@ -36,7 +38,7 @@ class Entidad:
 
 @dataclass
 class AgregacionRaiz(Entidad, ValidarReglasMixin):
-    eventos: list[EventoDominio] = field(default_factory=list)
+    eventos: List[EventoDominio] = field(default_factory=list)
 
     def agregar_evento(self, evento: EventoDominio):
         self.eventos.append(evento)

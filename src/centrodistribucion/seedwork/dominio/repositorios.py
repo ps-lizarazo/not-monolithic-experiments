@@ -8,6 +8,7 @@ reusables parte del seedwork del proyecto
 from abc import ABC, abstractmethod
 from uuid import UUID
 from .entidades import Entidad
+from typing import List
 
 class Repositorio(ABC):
     @abstractmethod
@@ -15,7 +16,7 @@ class Repositorio(ABC):
         ...
 
     @abstractmethod
-    def obtener_todos(self) -> list[Entidad]:
+    def obtener_todos(self) -> List[Entidad]:
         ...
 
     @abstractmethod

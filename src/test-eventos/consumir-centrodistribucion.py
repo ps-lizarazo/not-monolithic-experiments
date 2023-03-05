@@ -1,24 +1,24 @@
-from pulsar.schema import String, Long, Array, Record
-from centrodistribucion.seedwork.infraestructura.schema.v1.eventos import EventoIntegracion
-from centrodistribucion.seedwork.infraestructura.utils import time_millis
+import pulsar
+from pulsar.schema import *
+from dataclasses import dataclass
+from datetime import datetime
 import uuid
+import time
 
-class EventoOrdenCreadaItem(Record):
-    guid = String()
-    direccion_recogida = String()
-    direccion_entrega = String()
-    tamanio = String()
-    telefono = String()
+def time_millis():
+    return int(time.time() * 1000)
 
-class EventoOrdenCreadaPayload(Record):
-    guid = String()
-    items = Array(EventoOrdenCreadaItem())
-    fecha_creacion = Long()
+def _consumir_mensajes(topico, schema):
+    cliente = pulsar.Client('pulsar://localhost:6650')
+    consumidor = cliente.subscribe(topico, subscription_name="entregas-sub-eventos", schema=AvroSchema(EventoOrdenAlistada))
+    
+    while True:
+        mensaje = consumidor.receive()
+        print(f'Evento recibido: {mensaje.value().data}')
 
-class EventoOrdenCreada(EventoIntegracion):
-    # NOTE La librería Record de Pulsar no es capaz de reconocer campos heredados, 
-    # por lo que los mensajes al ser codificados pierden sus valores
-    # Dupliqué el los cambios que ya se encuentran en la clase Mensaje
+        consumidor.acknowledge(mensaje)
+
+class EventoIntegracion(Record):
     id = String(default=str(uuid.uuid4()))
     time = Long()
     ingestion = Long(default=time_millis())
@@ -26,10 +26,6 @@ class EventoOrdenCreada(EventoIntegracion):
     type = String()
     datacontenttype = String()
     service_name = String()
-    data = EventoOrdenCreadaPayload()
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
 class EventoOrdenAlistadaItem(Record):
     guid = String()
@@ -55,3 +51,5 @@ class EventoOrdenAlistada(EventoIntegracion):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+_consumir_mensajes('eventos-centrodistribucion', AvroSchema(EventoOrdenAlistada))

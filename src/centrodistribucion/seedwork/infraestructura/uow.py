@@ -8,6 +8,9 @@ import pickle
 import logging
 import traceback
 
+from typing import List
+
+current_session = dict()
 
 class Lock(Enum):
     OPTIMISTA = 1
@@ -42,7 +45,7 @@ class UnidadTrabajo(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def batches(self) -> list[Batch]:
+    def batches(self) -> List[Batch]:
         raise NotImplementedError
 
     @abstractmethod
@@ -83,23 +86,18 @@ class UnidadTrabajo(ABC):
 
 def is_flask():
     try:
-        from flask import session
         return True
     except Exception as e:
         return False
 
 def registrar_unidad_de_trabajo(serialized_obj):
-    from aeroalpes.config.uow import UnidadTrabajoSQLAlchemy
-    from flask import session
-    
-
-    session['uow'] = serialized_obj
+    from centrodistribucion.config.uow import UnidadTrabajoSQLAlchemy
+    current_session['uow'] = serialized_obj
 
 def flask_uow():
-    from flask import session
-    from aeroalpes.config.uow import UnidadTrabajoSQLAlchemy
-    if session.get('uow'):
-        return session['uow']
+    from centrodistribucion.config.uow import UnidadTrabajoSQLAlchemy
+    if current_session.get('uow'):
+        return current_session['uow']
     else:
         uow_serialized = pickle.dumps(UnidadTrabajoSQLAlchemy())
         registrar_unidad_de_trabajo(uow_serialized)
@@ -148,3 +146,8 @@ class UnidadTrabajoPuerto:
         uow = unidad_de_trabajo()
         uow.registrar_batch(operacion, *args, lock=lock, **kwargs)
         guardar_unidad_trabajo(uow)
+    
+    @staticmethod
+    def clean_session():
+        global current_session
+        current_session = dict()
