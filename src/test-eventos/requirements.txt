@@ -1,2 +1,0 @@
-pulsar-client
-pulsar-client[avro]
