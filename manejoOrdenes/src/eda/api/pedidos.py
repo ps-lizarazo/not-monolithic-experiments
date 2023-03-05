@@ -7,16 +7,19 @@ from eda.seedwork.dominio.excepciones import ExcepcionDominio
 from flask import redirect, render_template, request, session, url_for
 from flask import Response
 from eda.modulos.pedidos.aplicacion.mapeadores import MapeadorOrdenDTOJson
+import pdb
 
 bp = api.crear_blueprint('pedidos', '/pedidos')
 
 @bp.route('/orden', methods=('POST',))
 def reservar():
     try:
+        
         orden_dict = request.json
 
         map_orden = MapeadorOrdenDTOJson()
         orden_dto = map_orden.externo_a_dto(orden_dict)
+        pdb.set_trace()
 
         sr = ServicioOrdenes()
         dto_final = sr.crear_orden(orden_dto)

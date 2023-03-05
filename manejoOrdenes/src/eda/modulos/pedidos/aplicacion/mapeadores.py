@@ -5,20 +5,37 @@ from eda.modulos.pedidos.dominio.objetos_valor import Item
 from .dto import OrdenDTO, ItemDTO
 
 from datetime import datetime
-
+import pdb
 class MapeadorOrdenDTOJson(AppMap):
-    def _procesar_item(self, item: dict) -> ItemDTO:
-
-        item_dto: ItemDTO = ItemDTO(item.get('nombre'), item.get('cantidad'), item.get('origen'), item.get('destino')) 
-        return item_dto
+    def _procesar_item(self, item_pram: dict) -> ItemDTO:
+        _direccion_recogida = item_pram.get('direccion_recogida')
+        _direccion_entrega = item_pram.get('direccion_entrega')
+        
+        item: ItemDTO = ItemDTO(
+            item_pram.get('nombre'),
+            item_pram.get('cantidad'),
+            _direccion_recogida.get('pais'),
+            _direccion_recogida.get('ciudad'),
+            _direccion_recogida.get('direccion'),
+            _direccion_recogida.get('codigo_postal'),
+            _direccion_recogida.get('telefono_responsable'),
+            _direccion_recogida.get('nombre_responsable'),
+            _direccion_entrega.get('pais'),
+            _direccion_entrega.get('ciudad'),
+            _direccion_entrega.get('direccion'),
+            _direccion_entrega.get('codigo_postal'),
+            _direccion_entrega.get('telefono_responsable'),
+            _direccion_entrega.get('nombre_responsable')
+        )
+        return item
     
     def externo_a_dto(self, externo: dict) -> OrdenDTO:
         orden_dto = OrdenDTO()
 
         items: list[ItemDTO] = list()
-        for itin in externo.get('items', list()):
-            orden_dto.items.append(self._procesar_item(itin))
-
+        for itm in externo.get('orden').get('items', list()):
+            orden_dto.items.append(self._procesar_item(itm))
+    
         return orden_dto
 
     def dto_a_externo(self, dto: OrdenDTO) -> dict:
@@ -27,31 +44,10 @@ class MapeadorOrdenDTOJson(AppMap):
 class MapeadorOrdenes(RepMap):
     _FORMATO_FECHA = '%Y-%m-%dT%H:%M:%SZ'
 
-    def _procesar_itinerario(self, item_dto: ItemDTO) -> Item:
+    def _procesar_item(self, item_dto: ItemDTO) -> Item:
         Item()
-        odos = list()
-
-        for odo_dto in itinerario_dto.odos:
-            segmentos = list()
-            for seg_dto in odo_dto.segmentos:
-                
-                legs = list()
-
-                for leg_dto in seg_dto.legs:
-                    destino = Aeropuerto(codigo=leg_dto.destino.get('codigo'), nombre=leg_dto.destino.get('nombre'))
-                    origen = Aeropuerto(codigo=leg_dto.origen.get('codigo'), nombre=leg_dto.origen.get('nombre'))
-                    fecha_salida = datetime.strptime(leg_dto.fecha_salida, self._FORMATO_FECHA)
-                    fecha_llegada = datetime.strptime(leg_dto.fecha_llegada, self._FORMATO_FECHA)
-
-                    leg: Leg = Leg(fecha_salida, fecha_llegada, origen, destino)
-
-                    legs.append(leg)
-
-                segmentos.append(Segmento(legs))
-            
-            odos.append(Odo(segmentos))
-
-        return Item(odos)
+        
+        return Item
 
     def obtener_tipo(self) -> type:
         return Orden.__class__
@@ -66,15 +62,15 @@ class MapeadorOrdenes(RepMap):
         return OrdenDTO(fecha_creacion, fecha_actualizacion, _id, list())
 
     def dto_a_entidad(self, dto: OrdenDTO) -> Orden:
-        reserva = Orden()
-        reserva.itinerarios = list()
+        orden = Orden()
+        orden.items = list()
 
-        itinerarios_dto: list[ItemDTO] = dto.itinerarios
+        items_dto: list[ItemDTO] = dto.items
 
-        for itin in itinerarios_dto:
-            reserva.itinerarios.append(self._procesar_itinerario(itin))
+        for itm in items_dto:
+            orden.items.append(self._procesar_item(itm))
         
-        return reserva
+        return orden
 
 
 

@@ -12,17 +12,18 @@ from eda.seedwork.dominio.repositorios import Mapeador, Repositorio
 from eda.seedwork.dominio.fabricas import Fabrica
 from eda.seedwork.dominio.entidades import Entidad
 from dataclasses import dataclass
-
+import pdb
 @dataclass
 class _FabricaOrdenes(Fabrica):
     def crear_objeto(self, obj: any, mapeador: Mapeador) -> any:
         if isinstance(obj, Entidad):
             return mapeador.entidad_a_dto(obj)
         else:
+            
             orden: Orden = mapeador.dto_a_entidad(obj)
 
             self.validar_regla(MinimoUnItinerario(orden.items))
-            [self.validar_regla(RutaValida(ruta)) for itin in orden.items for odo in itin.odos for segmento in odo.segmentos for ruta in segmento.legs]
+            #[self.validar_regla(RutaValida(ruta)) for itin in orden.items for odo in itin.odos for segmento in odo.segmentos for ruta in segmento.legs]
             
             return orden
 
