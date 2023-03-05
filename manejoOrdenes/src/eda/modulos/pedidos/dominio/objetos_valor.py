@@ -56,6 +56,39 @@ class Item(ObjetoValor):
 
 	def cantidad(self) -> str:
 		return self.cantidad
-   
-
-   
+	
+	def pais_recogida(self) -> str:
+		return self.pais_recogida
+	
+	def ciudad_recogida(self) -> str:
+		return self.ciudad_recogida
+	
+	def direccion_recogida(self) -> str:
+		return self.direccion_recogida
+	
+	def codigo_postal_recogida(self) -> str:
+		return self.codigo_postal_recogida
+	
+	def telefono_responsable_recogida(self) -> str:
+		return self.telefono_responsable_recogida
+	
+	def nombre_responsable_recogida(self) -> str:
+		return self.nombre_responsable_recogida
+	
+	def pais_entrega(self) -> str:
+		return self.pais_entrega
+	
+	def ciudad_entrega(self) -> str:
+		return self.ciudad_entrega
+	
+	def direccion_entrega(self) -> str:
+		return self.direccion_entrega
+	
+	def codigo_postal_entrega(self) -> str:
+		return self.codigo_postal_entrega
+	
+	def telefono_responsable_entrega(self) -> str:
+		return self.telefono_responsable_entrega
+	
+	def nombre_responsable_entrega(self) -> str:
+		return self.nombre_responsable_entrega
