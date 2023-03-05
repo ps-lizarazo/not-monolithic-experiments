@@ -45,26 +45,22 @@ class MapeadorOrdenes(RepMap):
     _FORMATO_FECHA = '%Y-%m-%dT%H:%M:%SZ'
 
     def _procesar_item(self, item_dto: ItemDTO) -> Item:
-        Item()
-
-        _direccion_recogida = item_dto.direccion_recogida
-        _direccion_entrega = item_dto.direccion_entrega
-
+        
         Item(
             item_dto.nombre,
             item_dto.cantidad,
-            _direccion_recogida.pais,
-            _direccion_recogida.ciudad,
-            _direccion_recogida.direccion,
-            _direccion_recogida.codigo_postal,
-            _direccion_recogida.telefono_responsable,
-            _direccion_recogida.nombre_responsable,
-            _direccion_entrega.pais,
-            _direccion_entrega.ciudad,
-            _direccion_entrega.direccion,
-            _direccion_entrega.codigo_postal,
-            _direccion_entrega.telefono_responsable,
-            _direccion_entrega.nombre_responsable
+            item_dto.pais_recogida,
+            item_dto.ciudad_recogida,
+            item_dto.direccion_recogida,
+            item_dto.codigo_postal_recogida,
+            item_dto.telefono_responsable_recogida,
+            item_dto.nombre_responsable_recogida,
+            item_dto.pais_entrega,
+            item_dto.ciudad_entrega,
+            item_dto.direccion_entrega,
+            item_dto.codigo_postal_entrega,
+            item_dto.telefono_responsable_entrega,
+            item_dto.nombre_responsable_entrega
         )
         
         return Item

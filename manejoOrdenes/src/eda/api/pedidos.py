@@ -19,7 +19,6 @@ def reservar():
 
         map_orden = MapeadorOrdenDTOJson()
         orden_dto = map_orden.externo_a_dto(orden_dict)
-        pdb.set_trace()
 
         sr = ServicioOrdenes()
         dto_final = sr.crear_orden(orden_dto)
