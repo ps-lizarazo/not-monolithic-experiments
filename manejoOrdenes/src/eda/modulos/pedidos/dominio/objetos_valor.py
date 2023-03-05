@@ -36,6 +36,7 @@ class DireccionEntrega():
 
 @dataclass(frozen=True)
 class Item(ObjetoValor):
+	id: str
 	nombre: str 
 	cantidad: int
 	pais_recogida:str 
@@ -50,6 +51,9 @@ class Item(ObjetoValor):
 	codigo_postal_entrega:str 
 	telefono_responsable_entrega:str 
 	nombre_responsable_entrega:str
+
+	def id(self) -> str:
+		return self.id
 
 	def nombre(self) -> str:
 		return self.nombre

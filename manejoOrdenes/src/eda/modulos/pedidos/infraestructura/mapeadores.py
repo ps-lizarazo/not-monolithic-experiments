@@ -22,6 +22,7 @@ class MapeadorOrden(Mapeador):
 			_direccion_recogida = item_param.direccion_recogida
 			_direccion_entrega = item_param.direccion_entrega
 			
+			item.id = item_param.id
 			item.nombre = item_param.name
 			item.cantidad =  item_param.cantidad
 			item.pais_recogida = _direccion_recogida.pais
@@ -43,16 +44,25 @@ class MapeadorOrden(Mapeador):
 
 	def _procesar_item(self, item: any) -> list[ItemDTO]:
 		items_dto = list()
-
 		
-		# item_dto = ItemDTO()
-		# item_dto.nombre = item.nombre
-		# item_dto.origen_codigo = leg.origen.codigo
-		# item_dto.fecha_salida = leg.fecha_salida
-		# item_dto.fecha_llegada = leg.fecha_llegada
-		
+		item_dto = ItemDTO()
+		item_dto.id = item.id
+		item_dto.nombre = item.nombre
+		item_dto.cantidad = item.cantidad
+		item_dto.pais_recogida = item.pais_recogida
+		item_dto.ciudad_recogida = item.ciudad_recogida
+		item_dto.direccion_recogida = item.direccion_recogida
+		item_dto.codigo_postal_recogida = item.codigo_postal_recogida
+		item_dto.telefono_responsable_recogida = item.telefono_responsable_recogida
+		item_dto.nombre_responsable_recogida = item.nombre_responsable_recogida
+		item_dto.pais_entrega = item.pais_entrega
+		item_dto.ciudad_entrega = item.ciudad_entrega
+		item_dto.direccion_entrega = item.direccion_entrega
+		item_dto.codigo_postal_entrega = item.codigo_postal_entrega
+		item_dto.telefono_responsable_entrega = item.telefono_responsable_entrega
+		item_dto.nombre_responsable_entrega = item.nombre_responsable_entrega		
 
-		#items_dto.append(item_dto)
+		items_dto.append(item_dto)
 
 		return items_dto
 

@@ -3,6 +3,7 @@ from eda.seedwork.dominio.repositorios import Mapeador as RepMap
 from eda.modulos.pedidos.dominio.entidades import Orden
 from eda.modulos.pedidos.dominio.objetos_valor import Item
 from .dto import OrdenDTO, ItemDTO
+import uuid
 
 from datetime import datetime
 import pdb
@@ -12,6 +13,7 @@ class MapeadorOrdenDTOJson(AppMap):
         _direccion_entrega = item_pram.get('direccion_entrega')
         
         item: ItemDTO = ItemDTO(
+            str(uuid.uuid4()),
             item_pram.get('nombre'),
             item_pram.get('cantidad'),
             _direccion_recogida.get('pais'),
@@ -46,7 +48,8 @@ class MapeadorOrdenes(RepMap):
 
     def _procesar_item(self, item_dto: ItemDTO) -> Item:
         
-        Item(
+        item: Item = Item(
+            item_dto.id,
             item_dto.nombre,
             item_dto.cantidad,
             item_dto.pais_recogida,
@@ -63,11 +66,10 @@ class MapeadorOrdenes(RepMap):
             item_dto.nombre_responsable_entrega
         )
         
-        return Item
+        return item
 
     def obtener_tipo(self) -> type:
         return Orden.__class__
-
 
     def entidad_a_dto(self, entidad: Orden) -> OrdenDTO:
         
@@ -75,7 +77,7 @@ class MapeadorOrdenes(RepMap):
         fecha_actualizacion = entidad.fecha_actualizacion.strftime(self._FORMATO_FECHA)
         _id = str(entidad.id)
 
-        return OrdenDTO(fecha_creacion, fecha_actualizacion, _id, list())
+        return OrdenDTO(_id, fecha_creacion, fecha_actualizacion, list())
 
     def dto_a_entidad(self, dto: OrdenDTO) -> Orden:
         orden = Orden()
