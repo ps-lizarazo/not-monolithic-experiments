@@ -17,5 +17,22 @@
             "jinja": true,
             "justMyCode": true
         },
+        {
+            "name": "Entregas Python: Flask",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "env": {
+                "FLASK_APP": "src/entregas/api",
+                "FLASK_DEBUG": "1"
+            },
+            "args": [
+                "run",
+                "--no-debugger",
+                "--no-reload"
+            ],
+            "jinja": true,
+            "justMyCode": true
+        },
     ]
 }
