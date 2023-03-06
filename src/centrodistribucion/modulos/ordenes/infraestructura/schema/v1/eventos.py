@@ -1,12 +1,18 @@
-from pulsar.schema import *
+from pulsar.schema import String, Long, Array, Record
 from centrodistribucion.seedwork.infraestructura.schema.v1.eventos import EventoIntegracion
 from centrodistribucion.seedwork.infraestructura.utils import time_millis
 import uuid
 
+class EventoOrdenCreadaItem(Record):
+    guid = String()
+    direccion_recogida = String()
+    direccion_entrega = String()
+    tamanio = String()
+    telefono = String()
+
 class EventoOrdenCreadaPayload(Record):
-    id_reserva = String()
-    id_cliente = String()
-    estado = String()
+    guid = String()
+    items = Array(EventoOrdenCreadaItem())
     fecha_creacion = Long()
 
 class EventoOrdenCreada(EventoIntegracion):
@@ -21,6 +27,31 @@ class EventoOrdenCreada(EventoIntegracion):
     datacontenttype = String()
     service_name = String()
     data = EventoOrdenCreadaPayload()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+class EventoOrdenAlistadaItem(Record):
+    guid = String()
+    direccion_centro_distribucion = String()
+    direccion_entrega = String()
+    tamanio = String()
+    telefono = String()
+
+class EventoOrdenAlistadaPayload(Record):
+    guid = String()
+    items = Array(EventoOrdenAlistadaItem())
+    fecha_creacion = Long()
+
+class EventoOrdenAlistada(EventoIntegracion):
+    id = String(default=str(uuid.uuid4()))
+    time = Long()
+    ingestion = Long(default=time_millis())
+    specversion = String()
+    type = String()
+    datacontenttype = String()
+    service_name = String()
+    data = EventoOrdenAlistadaPayload()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

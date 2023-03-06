@@ -12,6 +12,7 @@ def _publicar_mensaje(mensaje, topico, schema):
     cliente = pulsar.Client('pulsar://localhost:6650')
     publicador = cliente.create_producer(topico, schema=AvroSchema(EventoOrdenCreada))
     publicador.send(mensaje)
+    print("===========EVENTO ENVIADO============")
     cliente.close()
 
 class EventoIntegracion(Record):
@@ -23,10 +24,16 @@ class EventoIntegracion(Record):
     datacontenttype = String()
     service_name = String()
 
+class EventoOrdenCreadaItem(Record):
+    guid = String()
+    direccion_recogida = String()
+    direccion_entrega = String()
+    tamanio = String()
+    telefono = String()
+
 class EventoOrdenCreadaPayload(Record):
-    id_reserva = String()
-    id_cliente = String()
-    estado = String()
+    guid = String()
+    items = Array(EventoOrdenCreadaItem())
     fecha_creacion = Long()
 
 class EventoOrdenCreada(EventoIntegracion):
@@ -46,10 +53,17 @@ class EventoOrdenCreada(EventoIntegracion):
         super().__init__(*args, **kwargs)
 
 new_event = EventoOrdenCreada(
-    data=EventoOrdenCreadaPayload(
-        id_reserva=str('123'),
-        id_cliente=str('456'),
-        estado=str('CREADA'),
+    data= EventoOrdenCreadaPayload (
+        guid=str(uuid.uuid4()),
+        items= [
+            EventoOrdenCreadaItem (
+                guid = str(uuid.uuid4()),
+                direccion_recogida = "Av direccion recoger 123",
+                direccion_entrega = "Av para entregar 123",
+                tamanio = "5kg",
+                telefono = "300 321321",
+            ),
+        ],
         fecha_creacion=int(datetime.now().timestamp())
     )
 )
