@@ -4,4 +4,6 @@ Entrega para la materia de diseño y construcción de aplicaciones no monolític
 
 source wsl-init.sh
 
-flask --app src/centrodistribucion/api --debug run
+flask --app src/ordenes/api run --port=5000
+flask --app src/centrodistribucion/api run --port=5001
+flask --app src/entregas/api run --port=5002

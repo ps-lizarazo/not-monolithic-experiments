@@ -17,30 +17,32 @@ class ObjetoValor:
 class Codigo(ABC, ObjetoValor):
     codigo: str
 
-class Direccion(ABC, ObjetoValor):
+class Ruta(ABC, ObjetoValor):
     @abstractmethod
-    def pais(self) -> str:
+    def origen(self) -> Locacion:
         ...
     
     @abstractmethod
-    def ciudad(self) -> str:
+    def destino(self) -> Locacion:
         ...
     
     @abstractmethod
-    def direccion(self) -> str:
+    def fecha_salida(self) -> datetime:
         ...
 
     @abstractmethod
-    def codigo_postal(self) -> str:
+    def fecha_llegada(self) -> datetime:
         ...
 
-    @abstractmethod
-    def telefono_responsable(self) -> str:
-        ...
+@dataclass(frozen=True)
+class Pais(ObjetoValor):
+    codigo: Codigo
+    nombre: str
 
-    @abstractmethod
-    def nombre_responsable(self) -> str:
-        ...
-
+@dataclass(frozen=True)
+class Ciudad(ObjetoValor):
+    pais: Pais
+    codigo: Codigo
+    nombre: str
 
 

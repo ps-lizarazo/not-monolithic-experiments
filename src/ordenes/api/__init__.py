@@ -1,44 +1,62 @@
 import os
-from flask import Flask, render_template, request, url_for, redirect, jsonify
+
+from flask import Flask, render_template, request, url_for, redirect, jsonify, session
+from flask_swagger import swagger
 
 my_app = None
 # Identifica el directorio base
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+def registrar_handlers():
+    import ordenes.modulos.ordenes.aplicacion
+
 def importar_modelos_alchemy():
-  import ordenes.modulos.pedidos.infraestructura.dto
+    import ordenes.modulos.ordenes.infraestructura.dto
 
-def create_app(configuracion=None):
-  # Init la aplicacion de Flask
-  app = Flask(__name__, instance_relative_config=True)
+def comenzar_consumidor():
+    import threading
+    import ordenes.modulos.ordenes.infraestructura.consumidores as ordenes
 
-  global my_app
-  my_app = app
+    # Suscripción a comandos
+    threading.Thread(target=ordenes.suscribirse_a_comandos).start()
 
-  # Configuracion de BD
-  app.config['SQLALCHEMY_DATABASE_URI'] =\
-          'sqlite:///' + os.path.join(basedir, 'database.db')
-  app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+def create_app(configuracion={}):
+    # Init la aplicacion de Flask
+    app = Flask(__name__, instance_relative_config=True)
 
-  # Inicializa la DB
-  from ordenes.config.db import init_db
-  init_db(app)
+    global my_app
+    my_app = app
+    
+    app.secret_key = '9d58f98f-3ae8-4149-a09f-3a8c2012e32c'
+    app.config['SESSION_TYPE'] = 'filesystem'
+    app.config['TESTING'] = configuracion.get('TESTING')
 
-  from ordenes.config.db import db
+     # Inicializa la DB
+    from ordenes.config.db import init_db, database_connection
 
-  importar_modelos_alchemy()
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_connection(configuracion, basedir=basedir)
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-  with app.app_context():
+    init_db(app)
+
+    from ordenes.config.db import db
+
+    importar_modelos_alchemy()
+    registrar_handlers()
+
+    with app.app_context():
         db.create_all()
+        comenzar_consumidor()
 
-  # Importa Blueprints
-  from . import pedidos
+    @app.route("/spec")
+    def spec():
+        swag = swagger(app)
+        swag['info']['version'] = "1.0"
+        swag['info']['title'] = "My API"
+        return jsonify(swag)
 
+    @app.route("/health")
+    def health():
+        return {"status": "up"}
 
-  app.register_blueprint(pedidos.bp)
-
-  @app.route("/health")
-  def health():
-    return {"status": "up"}
-
-  return app
+    return app

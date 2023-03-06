@@ -12,7 +12,8 @@
             "args": [
                 "run",
                 "--no-debugger",
-                "--no-reload"
+                "--no-reload",
+                "--port=5001"
             ],
             "jinja": true,
             "justMyCode": true
@@ -29,7 +30,26 @@
             "args": [
                 "run",
                 "--no-debugger",
-                "--no-reload"
+                "--no-reload",
+                "--port=5002"
+            ],
+            "jinja": true,
+            "justMyCode": true
+        },
+        {
+            "name": "Ordenes Python: Flask",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "env": {
+                "FLASK_APP": "src/ordenes/api",
+                "FLASK_DEBUG": "1"
+            },
+            "args": [
+                "run",
+                "--no-debugger",
+                "--no-reload",
+                "--port=5000"
             ],
             "jinja": true,
             "justMyCode": true
