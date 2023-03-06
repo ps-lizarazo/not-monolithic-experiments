@@ -7,8 +7,8 @@ En este archivo usted encontrará las entidades del dominio de Ordenes
 from __future__ import annotations
 from dataclasses import dataclass, field
 
-import eda.modulos.pedidos.dominio.objetos_valor as ov
-from eda.seedwork.dominio.entidades import Locacion, AgregacionRaiz, Entidad
+import ordenes.modulos.pedidos.dominio.objetos_valor as ov
+from ordenes.seedwork.dominio.entidades import Locacion, AgregacionRaiz, Entidad
 
 @dataclass
 class CentroDeDistribucion(AgregacionRaiz):

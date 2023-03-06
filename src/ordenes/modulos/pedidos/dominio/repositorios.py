@@ -6,7 +6,7 @@ del dominio de ordenes
 """
 
 from abc import ABC
-from eda.seedwork.dominio.repositorios import Repositorio
+from ordenes.seedwork.dominio.repositorios import Repositorio
 
 class RepositorioOrdenes(Repositorio, ABC):
     ...

@@ -1,8 +1,8 @@
-from eda.seedwork.aplicacion.servicios import Servicio
-from eda.modulos.pedidos.dominio.entidades import Orden
-from eda.modulos.pedidos.dominio.fabricas import FabricaPedido
-from eda.modulos.pedidos.infraestructura.fabricas import FabricaRepositorio
-from eda.modulos.pedidos.infraestructura.repositorios import RepositorioOrdenes
+from ordenes.seedwork.aplicacion.servicios import Servicio
+from ordenes.modulos.pedidos.dominio.entidades import Orden
+from ordenes.modulos.pedidos.dominio.fabricas import FabricaPedido
+from ordenes.modulos.pedidos.infraestructura.fabricas import FabricaRepositorio
+from ordenes.modulos.pedidos.infraestructura.repositorios import RepositorioOrdenes
 from .mapeadores import MapeadorOrdenes
 
 from .dto import OrdenDTO

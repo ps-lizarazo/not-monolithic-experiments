@@ -5,9 +5,9 @@ encargados de la transformación entre formatos de dominio y DTOs
 
 """
 
-from eda.seedwork.dominio.repositorios import Mapeador
-from eda.modulos.pedidos.dominio.objetos_valor import  Item
-from eda.modulos.pedidos.dominio.entidades import Orden
+from ordenes.seedwork.dominio.repositorios import Mapeador
+from ordenes.modulos.pedidos.dominio.objetos_valor import  Item
+from ordenes.modulos.pedidos.dominio.entidades import Orden
 from .dto import Orden as OrdenDTO
 from .dto import Item as ItemDTO
 

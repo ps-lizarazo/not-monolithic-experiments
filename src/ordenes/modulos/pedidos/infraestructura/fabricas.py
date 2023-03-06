@@ -6,9 +6,9 @@ objetos complejos en la capa de infraestructura del dominio de vuelos
 """
 
 from dataclasses import dataclass, field
-from eda.seedwork.dominio.fabricas import Fabrica
-from eda.seedwork.dominio.repositorios import Repositorio
-from eda.modulos.pedidos.dominio.repositorios import RepositorioOrdenes, RepositorioItems
+from ordenes.seedwork.dominio.fabricas import Fabrica
+from ordenes.seedwork.dominio.repositorios import Repositorio
+from ordenes.modulos.pedidos.dominio.repositorios import RepositorioOrdenes, RepositorioItems
 from .repositorios import RepositorioOrdenesSQLite
 from .excepciones import ExcepcionFabrica
 

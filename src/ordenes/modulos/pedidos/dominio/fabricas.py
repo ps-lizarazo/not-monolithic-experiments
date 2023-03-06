@@ -8,9 +8,9 @@ objetos complejos del dominio de vuelos
 from .entidades import Orden
 from .reglas import MinimoUnItinerario, RutaValida
 from .excepciones import TipoObjetoNoExisteEnDominioVuelosExcepcion
-from eda.seedwork.dominio.repositorios import Mapeador, Repositorio
-from eda.seedwork.dominio.fabricas import Fabrica
-from eda.seedwork.dominio.entidades import Entidad
+from ordenes.seedwork.dominio.repositorios import Mapeador, Repositorio
+from ordenes.seedwork.dominio.fabricas import Fabrica
+from ordenes.seedwork.dominio.entidades import Entidad
 from dataclasses import dataclass
 import pdb
 @dataclass

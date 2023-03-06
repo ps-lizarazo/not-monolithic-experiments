@@ -5,7 +5,7 @@ a la capa de infraestructura del dominio de vuelos
 
 """
 
-from eda.seedwork.dominio.excepciones import ExcepcionFabrica
+from ordenes.seedwork.dominio.excepciones import ExcepcionFabrica
 
 class NoExisteImplementacionParaTipoFabricaExcepcion(ExcepcionFabrica):
     def __init__(self, mensaje='No existe una implementación para el repositorio con el tipo dado.'):

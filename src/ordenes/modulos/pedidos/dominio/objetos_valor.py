@@ -7,7 +7,7 @@ En este archivo usted encontrará los objetos valor del dominio de ordenes
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from eda.seedwork.dominio.objetos_valor import ObjetoValor
+from ordenes.seedwork.dominio.objetos_valor import ObjetoValor
 from datetime import datetime
 
 

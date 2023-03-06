@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from eda.seedwork.aplicacion.dto import DTO
+from ordenes.seedwork.aplicacion.dto import DTO
 
 
 

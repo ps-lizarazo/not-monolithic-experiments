@@ -1,12 +1,12 @@
-import eda.seedwork.presentacion.api as api
+import ordenes.seedwork.presentacion.api as api
 import json
-from eda.modulos.pedidos.aplicacion.servicios import ServicioOrdenes
-from eda.modulos.pedidos.aplicacion.dto import OrdenDTO
-from eda.seedwork.dominio.excepciones import ExcepcionDominio
+from ordenes.modulos.pedidos.aplicacion.servicios import ServicioOrdenes
+from ordenes.modulos.pedidos.aplicacion.dto import OrdenDTO
+from ordenes.seedwork.dominio.excepciones import ExcepcionDominio
 
 from flask import redirect, render_template, request, session, url_for
 from flask import Response
-from eda.modulos.pedidos.aplicacion.mapeadores import MapeadorOrdenDTOJson
+from ordenes.modulos.pedidos.aplicacion.mapeadores import MapeadorOrdenDTOJson
 import pdb
 
 bp = api.crear_blueprint('pedidos', '/pedidos')

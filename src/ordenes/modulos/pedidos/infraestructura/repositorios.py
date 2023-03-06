@@ -5,11 +5,11 @@ persistir objetos dominio (agregaciones) en la capa de infraestructura del domin
 
 """
 
-from eda.config.db import db
-from eda.modulos.pedidos.dominio.repositorios import RepositorioItems,RepositorioOrdenes
-#from eda.modulos.pedidos.dominio.objetos_valor import NombreAero, Odo, Leg, Segmento, Itinerario, CodigoIATA
-from eda.modulos.pedidos.dominio.entidades import Orden
-from eda.modulos.pedidos.dominio.fabricas import FabricaPedido
+from ordenes.config.db import db
+from ordenes.modulos.pedidos.dominio.repositorios import RepositorioItems,RepositorioOrdenes
+#from ordenes.modulos.pedidos.dominio.objetos_valor import NombreAero, Odo, Leg, Segmento, Itinerario, CodigoIATA
+from ordenes.modulos.pedidos.dominio.entidades import Orden
+from ordenes.modulos.pedidos.dominio.fabricas import FabricaPedido
 from .dto import Orden as OrdenDTO
 from .mapeadores import MapeadorOrden
 from uuid import UUID

@@ -1,7 +1,7 @@
-from eda.seedwork.aplicacion.dto import Mapeador as AppMap
-from eda.seedwork.dominio.repositorios import Mapeador as RepMap
-from eda.modulos.pedidos.dominio.entidades import Orden
-from eda.modulos.pedidos.dominio.objetos_valor import Item
+from ordenes.seedwork.aplicacion.dto import Mapeador as AppMap
+from ordenes.seedwork.dominio.repositorios import Mapeador as RepMap
+from ordenes.modulos.pedidos.dominio.entidades import Orden
+from ordenes.modulos.pedidos.dominio.objetos_valor import Item
 from .dto import OrdenDTO, ItemDTO
 import uuid
 

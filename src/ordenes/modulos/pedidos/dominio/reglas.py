@@ -4,7 +4,7 @@ En este archivo usted encontrará reglas de negocio del dominio de cliente
 
 """
 
-from eda.seedwork.dominio.reglas import ReglaNegocio
+from ordenes.seedwork.dominio.reglas import ReglaNegocio
 from .objetos_valor import Item
 from .entidades import AgregacionRaiz
 
