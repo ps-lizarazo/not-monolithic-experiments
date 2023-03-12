@@ -26,6 +26,11 @@ jobs:
         project_id: ${{ env.GCP_PROJECT_ID }}
         export_environment_variables: true
         credentials_json: ${{ secrets.GCP_SA_KEY }}
+    
+    - id: 'get-credentials'
+      uses: 'google-github-actions/get-gke-credentials@v1'
+      with:
+        cluster_name: ${{ env.GCP_CLUSTER_NAME }}
 
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v1.1.0
