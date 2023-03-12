@@ -32,7 +32,7 @@ jobs:
 
     - name: Build and push Ordenes image
       run: |
-        echo ${{ secrets.GCP_SA_KEY }} | base64 --decode | docker login -u _json_key --password-stdin https://${{ env.GCP_ARTIFACT_URL }}
+        echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode | docker login -u _json_key --password-stdin https://${{ env.GCP_ARTIFACT_URL }}
         docker build -t ${{ env.GCP_ARTIFACT_URL }}/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/ordenes:latest -f ordenes.Dockerfile .
         docker push ${{ env.GCP_ARTIFACT_URL }}/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/ordenes:latest
 
@@ -43,7 +43,7 @@ jobs:
 
     - name: Build and push CentroDistribucion image
       run: |
-        echo ${{ secrets.GCP_SA_KEY }} | base64 --decode | docker login -u _json_key --password-stdin https://gcr.io
+        echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode | docker login -u _json_key --password-stdin https://gcr.io
         docker build -t gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/centrodistribucion:latest -f centrodistribucion.Dockerfile .
         docker push gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/centrodistribucion:latest
 
@@ -54,7 +54,7 @@ jobs:
 
     - name: Build and push Entregas image
       run: |
-        echo ${{ secrets.GCP_SA_KEY }} | base64 --decode | docker login -u _json_key --password-stdin https://gcr.io
+        echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode | docker login -u _json_key --password-stdin https://gcr.io
         docker build -t gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/entregas:latest -f entregas.Dockerfile .
         docker push gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/entregas:latest
 
@@ -66,7 +66,7 @@ jobs:
 
     - name: Build and push BFF image
       run: |
-        echo ${{ secrets.GCP_SA_KEY }} | base64 --decode | docker login -u _json_key --password-stdin https://gcr.io
+        echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode | docker login -u _json_key --password-stdin https://gcr.io
         docker build -t gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/bff:latest -f bff.Dockerfile .
         docker push gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/bff:latest
 
