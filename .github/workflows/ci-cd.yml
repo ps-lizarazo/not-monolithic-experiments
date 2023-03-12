@@ -31,6 +31,7 @@ jobs:
       uses: 'google-github-actions/get-gke-credentials@v1'
       with:
         cluster_name: ${{ env.GCP_CLUSTER_NAME }}
+        location: ${{ env.GCP_COMPUTE_ZONE }}
 
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v1.1.0
