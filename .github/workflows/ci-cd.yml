@@ -44,7 +44,6 @@ jobs:
 
     - name: Deploy Ordenes to GKE
       run: |
-        gcloud container clusters get-credentials ${{ env.GCP_CLUSTER_NAME }} --zone ${{ env.GCP_COMPUTE_ZONE }} --project ${{ env.GCP_PROJECT_ID }}
         kubectl apply -f ordenes-deployment.yaml
 
     - name: Build and push CentroDistribucion image
@@ -55,7 +54,6 @@ jobs:
 
     - name: Deploy CentroDistribucion to GKE
       run: |
-        gcloud container clusters get-credentials ${{ env.GCP_CLUSTER_NAME }} --zone ${{ env.GCP_COMPUTE_ZONE }} --project ${{ env.GCP_PROJECT_ID }}
         kubectl apply -f centrodistribucion-deployment.yaml
 
     - name: Build and push Entregas image
@@ -66,7 +64,6 @@ jobs:
 
     - name: Deploy Entregas to GKE
       run: |
-        gcloud container clusters get-credentials ${{ env.GCP_CLUSTER_NAME }} --zone ${{ env.GCP_COMPUTE_ZONE }} --project ${{ env.GCP_PROJECT_ID }}
         kubectl apply -f entregas-deployment.yaml
 
 
@@ -78,5 +75,4 @@ jobs:
 
     - name: Deploy BFF to GKE
       run: |
-        gcloud container clusters get-credentials ${{ env.GCP_CLUSTER_NAME }} --zone ${{ env.GCP_COMPUTE_ZONE }} --project ${{ env.GCP_PROJECT_ID }}
         kubectl apply -f bff-deployment.yaml
