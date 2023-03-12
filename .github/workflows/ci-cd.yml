@@ -49,8 +49,8 @@ jobs:
     - name: Build and push CentroDistribucion image
       run: |
         echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode | docker login -u _json_key --password-stdin https://${{ env.GCP_ARTIFACT_URL }}
-        docker build -t gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/centrodistribucion:latest -f centrodistribucion.Dockerfile .
-        docker push gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/centrodistribucion:latest
+        docker build -t ${{ env.GCP_ARTIFACT_URL }}/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/centrodistribucion:latest -f centrodistribucion.Dockerfile .
+        docker push ${{ env.GCP_ARTIFACT_URL }}/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/centrodistribucion:latest
 
     - name: Deploy CentroDistribucion to GKE
       run: |
@@ -59,8 +59,8 @@ jobs:
     - name: Build and push Entregas image
       run: |
         echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode | docker login -u _json_key --password-stdin https://${{ env.GCP_ARTIFACT_URL }}
-        docker build -t gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/entregas:latest -f entregas.Dockerfile .
-        docker push gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/entregas:latest
+        docker build -t ${{ env.GCP_ARTIFACT_URL }}/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/entregas:latest -f entregas.Dockerfile .
+        docker push ${{ env.GCP_ARTIFACT_URL }}/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/entregas:latest
 
     - name: Deploy Entregas to GKE
       run: |
@@ -70,8 +70,8 @@ jobs:
     - name: Build and push BFF image
       run: |
         echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode | docker login -u _json_key --password-stdin https://${{ env.GCP_ARTIFACT_URL }}
-        docker build -t gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/bff:latest -f bff.Dockerfile .
-        docker push gcr.io/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/bff:latest
+        docker build -t ${{ env.GCP_ARTIFACT_URL }}/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/bff:latest -f bff.Dockerfile .
+        docker push ${{ env.GCP_ARTIFACT_URL }}/${{ env.GCP_PROJECT_ID }}/${{ env.GCR_REPOSITORY_NAME }}/bff:latest
 
     - name: Deploy BFF to GKE
       run: |
